@@ -40,6 +40,13 @@ describe('AppController (e2e)', () => {
 			});
 	});
 
+	it('/review/create (POST) - failure', async () => {
+		return request(app.getHttpServer())
+			.post('/review/create')
+			.send({ ...testDTO, rating: 0 } as CreateReviewDto)
+			.expect(400);
+	});
+
 	it('/review/byProduct/:productId (GET) - success', async () => {
 		return request(app.getHttpServer())
 			.get('/review/byProduct/' + productId)
