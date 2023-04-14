@@ -8,7 +8,7 @@ import { ReviewService } from './review.service';
 	controllers: [ReviewController],
 	imports: [
 		MongooseModule.forFeature([
-			{ name: ReviewModel.name, schema: ReviewSchema },
+			{ name: ReviewModel.name, schema: ReviewSchema, collection: 'Review' },
 		]),
 	],
 	providers: [ReviewService],
