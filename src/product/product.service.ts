@@ -39,8 +39,10 @@ export class ProductService {
 				{
 					$lookup: {
 						from: 'Review',
-						localField: '_id',
-						foreignField: 'productId',
+						let: { searchId: { $toString: '$_id' } },
+						pipeline: [
+							{ $match: { $expr: { $eq: ['$productId', '$$searchId'] } } },
+						],
 						as: 'reviews',
 					},
 				},
