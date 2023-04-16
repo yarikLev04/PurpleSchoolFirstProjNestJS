@@ -33,7 +33,7 @@ export class TopPageAdvantage {
 @Schema({ timestamps: true })
 export class TopPageModel {
 	@Prop({ enum: TopLevelCategories })
-	firstLevelCategory: TopLevelCategories;
+	firstCategory: TopLevelCategories;
 
 	@Prop()
 	secondCategory: string;
