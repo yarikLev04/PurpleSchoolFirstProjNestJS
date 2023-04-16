@@ -1,0 +1,19 @@
+name: Publish Docker
+
+on:
+  push:
+    branch: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    step:
+      - uses: actions/checkout@main
+      - name: Publish to registry
+        uses: elgohr/Publish-Docker-Github-Action@master
+        with:
+          registry: docker.pkg.github.com
+          name: docker.pkg.github.com/yarikLev04/PurpleSchoolFirstProjNestJS
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          tags: "develop"
