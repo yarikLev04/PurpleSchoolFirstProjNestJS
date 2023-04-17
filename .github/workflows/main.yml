@@ -7,15 +7,12 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    permissions:
-      packages: write
     steps:
       - uses: actions/checkout@main
       - name: Publish to Registry
         uses: elgohr/Publish-Docker-Github-Action@v5
         with:
-          registry: ghcr.io
-          name: ghcr.io/yarikLev04/top-api/top-api
+          name: yarikLev04/top-api/top-api
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
           tags: "develop"
