@@ -16,14 +16,27 @@ import { ReviewService } from './review.service';
 import { REVIEW_NOT_FOUND } from './review.consts';
 import { JwtAuthGuard } from '../auth/guards/jwt.guard';
 import { IdValidationPipe } from '../pipes/id-validation.pipe';
+import { TelegrafService } from '../telegraf/telegraf.service';
 
 @Controller('review')
 export class ReviewController {
-	constructor(private readonly reviewService: ReviewService) {}
+	constructor(
+		private readonly reviewService: ReviewService,
+		private telegrafService: TelegrafService
+	) {}
 
 	@UsePipes(new ValidationPipe())
 	@Post('create')
 	async create(@Body() dto: CreateReviewDto) {
+		const message =
+			`Name: ${dto.name}\n` +
+			`Title ${dto.title}\n` +
+			`Description: ${dto.description}\n` +
+			`Rating: ${dto.rating}\n` +
+			`ID Product: ${dto.productId}`;
+
+		await this.telegrafService.sendMessage(message);
+
 		return this.reviewService.create(dto);
 	}
 
