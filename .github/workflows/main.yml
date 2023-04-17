@@ -12,7 +12,7 @@ jobs:
       - name: Publish to registry
         uses: elgohr/Publish-Docker-Github-Action@v5
         with:
-          registry: docker.pkg.github.com
+          registry: ghcr.io
           name: docker.pkg.github.com/yarikLev04/top-api/top-api
           username: ${{ github.actor }}
           password: ${{ secrets.TOKEN }}
