@@ -20,6 +20,9 @@ export class HhData {
 
 	@Prop()
 	seniorSalary: number;
+
+	@Prop()
+	updatedAt: Date;
 }
 
 export class TopPageAdvantage {
@@ -41,7 +44,7 @@ export class TopPageModel {
 	@Prop({ unique: true })
 	alias: string;
 
-	@Prop({ index: true })
+	@Prop()
 	title: string;
 
 	@Prop()
@@ -53,7 +56,7 @@ export class TopPageModel {
 	@Prop({ type: () => [TopPageAdvantage] })
 	advantages: TopPageAdvantage[];
 
-	@Prop({ index: true })
+	@Prop()
 	seoText: string;
 
 	@Prop()
@@ -72,3 +75,5 @@ export class TopPageModel {
 export type TopPageDocument = HydratedDocument<TopPageModel>;
 
 export const TopPageSchema = SchemaFactory.createForClass(TopPageModel);
+
+TopPageSchema.index({ title: 'text', seoText: 'text' });

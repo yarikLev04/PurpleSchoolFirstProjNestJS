@@ -10,9 +10,12 @@ import { FilesModule } from './files/files.module';
 import { SitemapModule } from './sitemap/sitemap.module';
 import { TelegrafModule } from './telegraf/telegraf.module';
 import { getTelegrafConfig } from './configs/telegraf.config';
+import { HhModule } from './hh/hh.module';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
 	imports: [
+		ScheduleModule.forRoot(),
 		ConfigModule.forRoot(),
 		MongooseModule.forRootAsync({
 			imports: [ConfigModule],
@@ -30,6 +33,7 @@ import { getTelegrafConfig } from './configs/telegraf.config';
 			inject: [ConfigService],
 			useFactory: getTelegrafConfig,
 		}),
+		HhModule,
 	],
 	controllers: [],
 	providers: [],

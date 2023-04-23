@@ -5,8 +5,9 @@ import {
 	TopPageDocument,
 	TopPageModel,
 } from './top-page.model';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { CreateTopPageDto } from './dto/create-top-page.dto';
+import { addDays } from 'date-fns';
 
 @Injectable()
 export class TopPageService {
@@ -51,7 +52,19 @@ export class TopPageService {
 		return this.topPageModel.findByIdAndDelete(id).exec();
 	}
 
-	async updateById(id: string, dto: CreateTopPageDto) {
+	async updateById(id: string | Types.ObjectId, dto: CreateTopPageDto) {
 		return this.topPageModel.findByIdAndUpdate(id, dto, { new: true }).exec();
+	}
+
+	async findForHhUpdate(date: Date) {
+		return this.topPageModel
+			.find({
+				firstCategory: TopLevelCategories.Courses,
+				$or: [
+					{ 'hh.updatedAt': { $lt: addDays(date, -1).toString() } },
+					{ 'hh.updatedAt': { $exists: false } },
+				],
+			})
+			.exec();
 	}
 }
